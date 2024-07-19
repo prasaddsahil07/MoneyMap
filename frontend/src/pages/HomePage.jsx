@@ -20,7 +20,7 @@ const HomePage = () => {
 	const { data: authUserData } = useQuery(GET_AUTHENTICATED_USER);
 
 	const [logout, { loading, client }] = useMutation(LOGOUT, {
-		refetchQueries: ["GetAuthenticatedUser"],
+		refetchQueries: ["GetAuthenticatedUser"],   // refetchQueries -->> used to directly jump to login page
 	});
 
 	const [chartData, setChartData] = useState({
@@ -77,7 +77,7 @@ const HomePage = () => {
 	const handleLogout = async () => {
 		try {
 			await logout();
-			// Clear the Apollo Client cache FROM THE DOCS
+			// Clear the Apollo Client cache 
 			client.resetStore();
 		} catch (error) {
 			console.error("Error logging out:", error);
@@ -90,7 +90,7 @@ const HomePage = () => {
 			<div className='flex flex-col gap-6 items-center max-w-7xl mx-auto z-20 relative justify-center'>
 				<div className='flex items-center'>
 					<p className='md:text-4xl text-2xl lg:text-4xl font-bold text-center relative z-50 mb-4 mr-4 bg-gradient-to-r from-pink-600 via-indigo-500 to-pink-400 inline-block text-transparent bg-clip-text'>
-						Spend wisely, track wisely
+						Spend wisely, track smartly
 					</p>
 					<img
 						src={authUserData?.authUser.profilePicture}

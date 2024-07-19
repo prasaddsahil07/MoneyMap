@@ -69,7 +69,7 @@ await server.start();
 // Set up our Express middleware to handle CORS, body parsing,
 // and our expressMiddleware function.
 app.use(
-	"/",         // graphql route (root route)
+	"/graphql",         // graphql route (root route)
 	cors({
 		origin: "http://localhost:3000",
 		credentials: true,

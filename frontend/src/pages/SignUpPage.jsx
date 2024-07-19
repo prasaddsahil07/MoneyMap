@@ -15,11 +15,13 @@ const SignUpPage = () => {
 	});
 
 	const [signup, { loading }] = useMutation(SIGN_UP, {
-		refetchQueries: ["GetAuthenticatedUser"],
-	});
+		refetchQueries: ["GetAuthenticatedUser"],    // refetchQueries -->> used to directly jump to login page
+	});   
+	// for huge userbase don't use this, it puts an extra fetch request on the server instead modify the cache directly
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		if (!signUpData.name || !signUpData.username || !signUpData.password || !signUpData.gender) return toast.error("Please fill in all fields");
 		try {
 			await signup({
 				variables: {
