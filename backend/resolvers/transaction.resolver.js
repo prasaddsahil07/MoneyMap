@@ -40,6 +40,7 @@ const transactionResolver = {
 			});
 
 			return Object.entries(categoryMap).map(([category, totalAmount]) => ({ category, totalAmount }));
+			// categoryMap was initially an object but now it has been converted into an array
 		},
 	},
 	Mutation: {

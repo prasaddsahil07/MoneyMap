@@ -9,13 +9,13 @@ import TransactionFormSkeleton from "../components/skeletons/TransactionFormSkel
 const TransactionPage = () => {
 	const { id } = useParams();
 	const { loading, data } = useQuery(GET_TRANSACTION, {
-		variables: { id: id },
+		variables: { id: id },    // variables -->> it contains all the variables object for this query
 	});
 
 	console.log("Transaction", data);
 
 	const [updateTransaction, { loading: loadingUpdate }] = useMutation(UPDATE_TRANSACTION, {
-		// https://github.com/apollographql/apollo-client/issues/5419 => refetchQueries is not working, and here is how we fixed it
+		// https://github.com/apollographql/apollo-client/issues/5419 => refetchQueries is not working, and here is how to fix it
 		refetchQueries: [{ query: GET_TRANSACTION_STATISTICS }],
 	});
 
@@ -33,7 +33,7 @@ const TransactionPage = () => {
 		const amount = parseFloat(formData.amount); // convert amount to number bc by default it is string
 		// and the reason it's coming from an input field
 		try {
-			await updateTransaction({
+			await updateTransaction({      // calling mutations
 				variables: {
 					input: {
 						...formData,
@@ -56,7 +56,7 @@ const TransactionPage = () => {
 		}));
 	};
 
-	useEffect(() => {
+	useEffect(() => {          // to let the page like it was before
 		if (data) {
 			setFormData({
 				description: data?.transaction?.description,
@@ -64,7 +64,7 @@ const TransactionPage = () => {
 				category: data?.transaction?.category,
 				amount: data?.transaction?.amount,
 				location: data?.transaction?.location,
-				date: new Date(+data.transaction.date).toISOString().substr(0, 10),
+				date: new Date(+data.transaction.date).toISOString().substr(0, 10),  //in order to format the date
 			});
 		}
 	}, [data]);
