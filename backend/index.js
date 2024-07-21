@@ -20,12 +20,12 @@ import mergedTypeDefs from "./typeDefs/index.js";
 import { connectDB } from "./db/connectDB.js";
 import { configurePassport } from "./passport/passport.config.js";
 
-import job from "./cron.js";
+// import job from "./cron.js";
 
 dotenv.config();
 configurePassport();
 
-job.start();
+// job.start();
 
 const __dirname = path.resolve();
 const app = express();
@@ -82,10 +82,10 @@ app.use(
 	})
 );
 
-// npm run build will build your frontend app, and it will the optimized version of your app
+// npm run build will build your frontend app, and it will be the optimized version of your app
 app.use(express.static(path.join(__dirname, "frontend/dist")));
 
-app.get("*", (req, res) => {
+app.get("*", (req, res) => {       // any route other than /graphql should redirect to frontend 
 	res.sendFile(path.join(__dirname, "frontend/dist", "index.html"));
 });
 

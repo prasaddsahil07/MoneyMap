@@ -17,7 +17,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomePage = () => {
 	const { data } = useQuery(GET_TRANSACTION_STATISTICS);
-	const { data: authUserData } = useQuery(GET_AUTHENTICATED_USER);
+	const { data: authUserData } = useQuery(GET_AUTHENTICATED_USER);  // renaming data (previously used one)
 
 	const [logout, { loading, client }] = useMutation(LOGOUT, {
 		refetchQueries: ["GetAuthenticatedUser"],   // refetchQueries -->> used to directly jump to login page
@@ -27,7 +27,7 @@ const HomePage = () => {
 		labels: [],
 		datasets: [
 			{
-				label: "$",
+				label: "₹",
 				data: [],
 				backgroundColor: [],
 				borderColor: [],
@@ -42,6 +42,7 @@ const HomePage = () => {
 	useEffect(() => {
 		if (data?.categoryStatistics) {
 			const categories = data.categoryStatistics.map((stat) => stat.category);
+			//["expense","investment","savings"]
 			const totalAmounts = data.categoryStatistics.map((stat) => stat.totalAmount);
 
 			const backgroundColors = [];
@@ -60,7 +61,7 @@ const HomePage = () => {
 				}
 			});
 
-			setChartData((prev) => ({
+			setChartData((prev) => ({       // argument -->> previous state
 				labels: categories,
 				datasets: [
 					{

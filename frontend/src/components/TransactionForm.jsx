@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { CREATE_TRANSACTION } from "../graphql/mutations/transcation.mutation";
+import { CREATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
 
 const TransactionForm = () => {

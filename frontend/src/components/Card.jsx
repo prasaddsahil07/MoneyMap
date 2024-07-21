@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { formatDate } from "../utils/formatDate";
 import toast from "react-hot-toast";
 import { useMutation } from "@apollo/client";
-import { DELETE_TRANSACTION } from "../graphql/mutations/transcation.mutation";
+import { DELETE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
 
 const categoryColorMap = {
 	saving: "from-green-700 to-green-400",
@@ -20,7 +20,7 @@ const Card = ({ transaction, authUser }) => {
 	let { category, amount, location, date, paymentType, description } = transaction;
 	const cardClass = categoryColorMap[category];   // bracket notation to dynamically access object value 
 	const [deleteTransaction, { loading }] = useMutation(DELETE_TRANSACTION, {
-		refetchQueries: ["GetTransactions", "GetTransactionStatistics"],  // refetch to get the updated UI
+		refetchQueries: ["GetTransactions", "GetTransactionStatistics"],  // refetch to get updated UI immediately
 	});
 
 	// Capitalize the first letter of the description
