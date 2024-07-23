@@ -33,8 +33,8 @@ const TransactionForm = () => {
 	};
 
 	const currencyType = {
-		Dollar: '$',
 		Rupee: '₹',
+		Dollar: '$',
 		Euro: '€',
 		Pound: '£',
 		Yen: '¥',
@@ -157,7 +157,7 @@ const TransactionForm = () => {
 						>
 							{Object.keys(currencyType).map((key) => (
 								<option key={key} value={key}>
-									{key} ({currencyType[key]})
+									{key}({currencyType[key]})
 								</option>
 							))}
 						</select>
