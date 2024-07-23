@@ -3,6 +3,7 @@ import { CREATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
 
 const TransactionForm = () => {
+	const [selectedCurrency, setSelectedCurrency] = useState("Rupee");
 	const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION, {
 		refetchQueries: ["GetTransactions", "GetTransactionStatistics"],
 	});
@@ -30,6 +31,36 @@ const TransactionForm = () => {
 		}
 	};
 
+	const currencyType = {
+		Dollar: '$',
+		Rupee: '₹',
+		Euro: '€',
+		Pound: '£',
+		Yen: '¥',
+		SwissFranc: 'CHF',
+		CanadianDollar: 'C$',
+		AustralianDollar: 'A$',
+		SingaporeDollar: 'S$',
+		HongKongDollar: 'HK$',
+		NewZealandDollar: 'NZ$',
+		SwedishKrona: 'kr',
+		NorwegianKrone: 'kr',
+		DanishKrone: 'kr',
+		SaudiRiyal: 'SAR',
+		KuwaitiDinar: 'KWD',
+		BahrainiDinar: 'BHD',
+		OmaniRial: 'OMR',
+		JordanianDinar: 'JOD',
+		QatariRiyal: 'QAR',
+		UnitedArabEmiratesDirham: 'AED'
+	};
+	
+	const handleCurrencyType = (e) => {
+		setSelectedCurrency(e.target.value);
+	}
+
+	const symbol = currencyType[selectedCurrency];
+
 	return (
 		<form className='w-full max-w-lg flex flex-col gap-5 px-3' onSubmit={handleSubmit}>
 			{/* TRANSACTION */}
@@ -52,7 +83,7 @@ const TransactionForm = () => {
 				</div>
 			</div>
 			{/* PAYMENT TYPE */}
-			<div className='flex flex-wrap gap-3'>
+			<div className='flex flex-wrap gap-4'>
 				<div className='w-full flex-1 mb-6 md:mb-0'>
 					<label
 						className='block uppercase tracking-wide text-white text-xs font-bold mb-2'
@@ -112,10 +143,29 @@ const TransactionForm = () => {
 					</div>
 				</div>
 
+				{/* CURRENCY */}
+				<div className='w-full flex-1 mb-6 md:mb-0'>
+					<label className='block uppercase text-white text-xs font-bold mb-2' htmlFor='amount'>
+						Currency
+					</label>
+					<select
+							className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+							id='category'
+							name='category'
+							onChange={handleCurrencyType}
+						>
+							{Object.keys(currencyType).map((key) => (
+								<option key={key} value={key}>
+									{key} ({currencyType[key]})
+								</option>
+							))}
+						</select>
+				</div>
+
 				{/* AMOUNT */}
 				<div className='w-full flex-1 mb-6 md:mb-0'>
 					<label className='block uppercase text-white text-xs font-bold mb-2' htmlFor='amount'>
-						Amount(₹)
+						Amount({symbol})
 					</label>
 					<input
 						className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
