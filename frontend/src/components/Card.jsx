@@ -17,7 +17,6 @@ const categoryColorMap = {
 };
 
 const Card = ({ transaction, authUser, symbol }) => {
-	const { symbol } = useContext(CurrencyContext)
 	let { category, amount, location, date, paymentType, description } = transaction;
 	const cardClass = categoryColorMap[category];   // bracket notation to dynamically access object value 
 	const [deleteTransaction, { loading }] = useMutation(DELETE_TRANSACTION, {
