@@ -25,7 +25,6 @@ export const GET_TRANSACTION = gql`
 			amount
 			location
 			date
-			currencyType
 		}
 	}
 `;
