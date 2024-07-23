@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
 
-const TransactionForm = () => {
-	const [selectedCurrency, setSelectedCurrency] = useState("Rupee");
+const TransactionForm = ({ selectedCurrency, handleCurrencyType, symbol }) => {
 	const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION, {
 		refetchQueries: ["GetTransactions", "GetTransactionStatistics"],
 	});
@@ -55,12 +53,7 @@ const TransactionForm = () => {
 		QatariRiyal: 'QAR',
 		UnitedArabEmiratesDirham: 'AED'
 	};
-	
-	const handleCurrencyType = (e) => {
-		setSelectedCurrency(e.target.value);
-	}
 
-	const symbol = currencyType[selectedCurrency];
 
 	return (
 		<form className='w-full max-w-lg flex flex-col gap-5 px-3' onSubmit={handleSubmit}>
@@ -153,6 +146,7 @@ const TransactionForm = () => {
 							className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 							id='category'
 							name='category'
+							value={selectedCurrency}
 							onChange={handleCurrencyType}
 						>
 							{Object.keys(currencyType).map((key) => (

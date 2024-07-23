@@ -16,7 +16,8 @@ const categoryColorMap = {
 	investment: "from-blue-700 to-blue-400",
 };
 
-const Card = ({ transaction, authUser }) => {
+const Card = ({ transaction, authUser, symbol }) => {
+	const { symbol } = useContext(CurrencyContext)
 	let { category, amount, location, date, paymentType, description } = transaction;
 	const cardClass = categoryColorMap[category];   // bracket notation to dynamically access object value 
 	const [deleteTransaction, { loading }] = useMutation(DELETE_TRANSACTION, {
@@ -63,7 +64,7 @@ const Card = ({ transaction, authUser }) => {
 				</p>
 				<p className='text-white flex items-center gap-1'>
 					<FaSackDollar />
-					Amount: ₹{amount}
+					Amount: {symbol}{amount}
 				</p>
 				<p className='text-white flex items-center gap-1'>
 					<FaLocationDot />

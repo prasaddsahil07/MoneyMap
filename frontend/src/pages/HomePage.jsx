@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomePage = () => {
+	const [selectedCurrency, setSelectedCurrency] = useState("Rupee");
+
 	const { data } = useQuery(GET_TRANSACTION_STATISTICS);
 	const { data: authUserData } = useQuery(GET_AUTHENTICATED_USER);  // renaming data (previously used one)
 
@@ -86,6 +88,36 @@ const HomePage = () => {
 		}
 	};
 
+	const currencyType = {
+		Rupee: '₹',
+		Dollar: '$',
+		Euro: '€',
+		Pound: '£',
+		Yen: '¥',
+		SwissFranc: 'CHF',
+		CanadianDollar: 'C$',
+		AustralianDollar: 'A$',
+		SingaporeDollar: 'S$',
+		HongKongDollar: 'HK$',
+		NewZealandDollar: 'NZ$',
+		SwedishKrona: 'kr',
+		NorwegianKrone: 'kr',
+		DanishKrone: 'kr',
+		SaudiRiyal: 'SAR',
+		KuwaitiDinar: 'KWD',
+		BahrainiDinar: 'BHD',
+		OmaniRial: 'OMR',
+		JordanianDinar: 'JOD',
+		QatariRiyal: 'QAR',
+		UnitedArabEmiratesDirham: 'AED'
+	};
+	
+	const handleCurrencyType = (e) => {
+		setSelectedCurrency(e.target.value);
+	}
+
+	const symbol = currencyType[selectedCurrency];
+
 	return (
 		<>
 			<div className='flex flex-col gap-6 items-center max-w-7xl mx-auto z-20 relative justify-center'>
@@ -109,9 +141,13 @@ const HomePage = () => {
 						</div>
 					)}
 
-					<TransactionForm />
+					<TransactionForm
+						selectedCurrency={selectedCurrency}
+						handleCurrencyType={handleCurrencyType}
+                		symbol={symbol}
+					/>
 				</div>
-				<Cards />
+				<Cards symbol={symbol}/>
 			</div>
 		</>
 	);
